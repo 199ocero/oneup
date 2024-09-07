@@ -85,30 +85,64 @@
                 <p class="mt-4 text-xs">Current sun cycle</p>
             </x-card>
         </div>
-        <div class="mt-5 w-full" x-data="{ weeklyTemperature: @js($weeklyTemperature), weeklyDates: @js($weeklyDates) }" x-init="$nextTick(() => {
-            let options = {
-                chart: {
-                    type: 'line',
-                    height: 350
-                },
-                series: [{
-                    name: 'Temperature',
-                    data: weeklyTemperature
-                }],
-                xaxis: {
-                    categories: weeklyDates
-                },
-                yaxis: {
-                    title: {
-                        text: 'Temperature (°C)'
-                    }
+        <div class="mt-5 w-full" x-data="{
+            weeklyTemperature: $wire.entangle('weeklyTemperature'),
+            weeklyDates: $wire.entangle('weeklyDates'),
+            chart: null,
+            initChart() {
+                try {
+                    const options = {
+                        chart: {
+                            type: 'area',
+                            height: 350
+                        },
+                        zoom: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: 'Temperature',
+                            data: this.weeklyTemperature
+                        }],
+                        xaxis: {
+                            categories: this.weeklyDates
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Temperature (°C)'
+                            }
+                        }
+                    };
+                    this.chart = new ApexCharts(this.$refs.chartDiv, options);
+                    this.chart.render();
+                } catch (error) {}
+            },
+            updateChart() {
+                if (this.chart) {
+                    try {
+                        this.chart.updateOptions({
+                            series: [{
+                                name: 'Temperature',
+                                data: this.weeklyTemperature
+                            }],
+                            xaxis: {
+                                categories: this.weeklyDates
+                            }
+                        });
+                    } catch (error) {}
+                } else {
+                    this.initChart();
                 }
-            };
-        
-            var chart = new ApexCharts(document.querySelector('#weather-chart'), options);
-            chart.render();
-        })">
-            <div id="weather-chart"></div>
+            }
+        }" x-init="$nextTick(() => {
+            initChart();
+            $watch('weeklyTemperature', value => {
+                updateChart();
+            });
+            $watch('weeklyDates', value => {
+                updateChart();
+            });
+        });">
+            <div x-ref="chartDiv"></div>
         </div>
     </div>
 </x-fieldset>
