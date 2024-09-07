@@ -22,9 +22,14 @@ class WeatherInformation extends Component
 
     public ?bool $isDay = null;
 
+    public array $weeklyTemperature = [];
+
+    public array $weeklyDates = [];
+
     #[On('set-weather')]
     public function setWeather(array $weather): void
     {
+
         $this->currenTemperature = round($weather['current']['temp'] - 273.15, 2);
         $this->feelsLike = round($weather['current']['feels_like'] - 273.15, 2);
         $this->precipitation = isset($weather['daily'][0]['pop']) ? round($weather['daily'][0]['pop'] * 100, 2) : null;
@@ -43,6 +48,15 @@ class WeatherInformation extends Component
             Carbon::createFromTimestamp($sunriseTimestamp, $timezone),
             Carbon::createFromTimestamp($sunsetTimestamp, $timezone)
         );
+
+        // Reset the arrays before adding new data
+        $this->weeklyTemperature = [];
+        $this->weeklyDates = [];
+
+        foreach (array_slice($weather['daily'], 0, 7) as $day) {
+            $this->weeklyTemperature[] = round($day['temp']['day'] - 273.15, 2);
+            $this->weeklyDates[] = Carbon::createFromTimestamp($day['dt'], $timezone)->format('F j, Y');
+        }
     }
 
     public function render()

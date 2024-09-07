@@ -35,6 +35,7 @@
         <div class="min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 dark:from-gray-800 dark:to-gray-900">
             {{ $slot }}
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         @vite('resources/js/app.js')
     </body>
 
