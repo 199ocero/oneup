@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Enums\OpenWeatherApiTypes;
 use App\Http\Integrations\OpenWeather\OpenWeatherConnector;
 use App\Http\Integrations\OpenWeather\Requests\GetDirectGeocoding;
-use App\Http\Integrations\OpenWeather\Requests\GetWeather;
 use App\Rules\Geocoding;
 use Livewire\Component;
 
@@ -54,24 +53,10 @@ class WeatherLocation extends Component
             $latitude = $geocoding[0]['lat'];
             $longitude = $geocoding[0]['lon'];
 
-            /**
-             * Now that we have obtained the precise geographical coordinates (latitude and longitude)
-             * for the user-specified location, we can proceed to fetch the current weather information.
-             *
-             * We'll use these coordinates with the OpenWeather Weather API to retrieve accurate
-             * and up-to-date weather data for the exact location the user requested.
-             *
-             * This two-step process (geocoding followed by weather data retrieval) ensures
-             * we provide the most relevant and location-specific weather information possible.
-             */
-            $openWeatherConnector = new OpenWeatherConnector(OpenWeatherApiTypes::Weather);
-            $weatherResponse = $openWeatherConnector->send(new GetWeather(
-                $latitude,
-                $longitude,
-                config('openweather.api_key')
-            ));
-
-            $this->dispatch('set-weather', $weatherResponse->json());
+            $this->dispatch('set-weather', [
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
         } else {
             $this->addError('location', 'The location could not be found. Please try again.');
         }
