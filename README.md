@@ -6,11 +6,11 @@ OpenWeather Weather Dashboard using Tailwind CSS, Alpine.js, Laravel 11, and Liv
 
 ### Light Mode
 
-![Light Mode](public/light.png)
+![Light Mode](https://raw.githubusercontent.com/199ocero/oneup/main/public/images/light.png)
 
 ### Dark Mode
 
-![Dark Mode](public/dark.png)
+![Dark Mode](https://raw.githubusercontent.com/199ocero/oneup/main/public/images/dark.png)
 
 ## Installation
 
