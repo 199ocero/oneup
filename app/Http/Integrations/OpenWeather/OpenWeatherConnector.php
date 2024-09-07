@@ -2,6 +2,7 @@
 
 namespace App\Http\Integrations\OpenWeather;
 
+use App\Enums\OpenWeatherApiTypes;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
 
@@ -9,12 +10,24 @@ class OpenWeatherConnector extends Connector
 {
     use AcceptsJson;
 
+    public function __construct(
+        public OpenWeatherApiTypes $type
+    ) {}
+
     /**
      * The Base URL of the API
      */
     public function resolveBaseUrl(): string
     {
-        return config('openweather.url');
+        if ($this->type === OpenWeatherApiTypes::Weather) {
+            return config('openweather.weather_api_url');
+        }
+
+        if ($this->type === OpenWeatherApiTypes::Geocoding) {
+            return config('openweather.geocoding_api_url');
+        }
+
+        throw new \Exception('Invalid OpenWeather API type');
     }
 
     /**
@@ -22,10 +35,7 @@ class OpenWeatherConnector extends Connector
      */
     protected function defaultHeaders(): array
     {
-        return [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-        ];
+        return [];
     }
 
     /**

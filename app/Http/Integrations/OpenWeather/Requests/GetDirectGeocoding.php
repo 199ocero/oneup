@@ -5,11 +5,11 @@ namespace App\Http\Integrations\OpenWeather\Requests;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 
-class GetWeather extends Request
+class GetDirectGeocoding extends Request
 {
     public function __construct(
-        public string $latitude,
-        public string $longitude,
+        public string $cityName,
+        public string $countyCode,
         public string $apiKey
     ) {}
 
@@ -23,6 +23,6 @@ class GetWeather extends Request
      */
     public function resolveEndpoint(): string
     {
-        return "/onecall?lat={$this->latitude}&lon={$this->longitude}&limit=1&appid={$this->apiKey}";
+        return "/direct?q={$this->cityName},{$this->countyCode}&limit=1&appid={$this->apiKey}";
     }
 }
