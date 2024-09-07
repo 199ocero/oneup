@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-
+    content: ["./app/Livewire/**/*.php", "./resources/views/**/*.blade.php"],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
