@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+svg .apexcharts-text {
+    @apply fill-gray-800 dark:fill-white;
+}
+
+svg .apexcharts-grid-borders line {
+    @apply stroke-gray-500 dark:stroke-white;
+}
+
+svg .apexcharts-grid line {
+    @apply stroke-gray-500 dark:stroke-white;
+}

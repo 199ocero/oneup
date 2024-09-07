@@ -162,7 +162,9 @@
                 updateChart();
             });
         });">
-            <div x-ref="chartDiv"></div>
+            <div x-ref="chartDiv"
+                class="p-5 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg dark:from-gray-800 dark:to-gray-900">
+            </div>
         </div>
     </div>
 </x-fieldset>
