@@ -3,14 +3,14 @@
         <x-card class="p-4 bg-gradient-to-br from-blue-400 to-blue-600 text-white !border-none">
             <div class="flex justify-between items-center">
                 <div>
-                    <p class="text-sm font-semibold">Today's Temperature</p>
-                    <p class="mt-2 text-3xl font-bold">{{ $temperature ?? '--' }}°C</p>
+                    <p class="text-sm font-semibold">Current Temperature</p>
+                    <p class="mt-2 text-3xl font-bold">{{ $currenTemperature ?? '--' }}°C</p>
                 </div>
                 <div class="text-5xl">
-                    @if (isset($temperature))
-                        @if ($temperature > 25)
+                    @if (isset($currenTemperature))
+                        @if ($currenTemperature > 25)
                             🌞
-                        @elseif($temperature > 15)
+                        @elseif($currenTemperature > 15 && $currenTemperature <= 25)
                             🌤️
                         @else
                             ❄️
@@ -75,17 +75,13 @@
                 </div>
                 <div class="text-5xl">
                     @if (isset($isDay))
-                        @if ($isDay)
-                            ☀️
-                        @else
-                            🌙
-                        @endif
+                        {{ $isDay ? '☀️' : '🌙' }}
                     @else
                         🌓
                     @endif
                 </div>
             </div>
-            <p class="mt-4 text-xs">Daily sun cycle</p>
+            <p class="mt-4 text-xs">Current sun cycle</p>
         </x-card>
     </div>
 </x-fieldset>

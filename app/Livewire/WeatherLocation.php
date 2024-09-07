@@ -65,11 +65,13 @@ class WeatherLocation extends Component
              * we provide the most relevant and location-specific weather information possible.
              */
             $openWeatherConnector = new OpenWeatherConnector(OpenWeatherApiTypes::Weather);
-            $response = $openWeatherConnector->send(new GetWeather(
+            $weatherResponse = $openWeatherConnector->send(new GetWeather(
                 $latitude,
                 $longitude,
                 config('openweather.api_key')
             ));
+
+            $this->dispatch('set-weather', $weatherResponse->json());
         } else {
             $this->addError('location', 'The location could not be found. Please try again.');
         }
