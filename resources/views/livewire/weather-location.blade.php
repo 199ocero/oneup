@@ -4,7 +4,7 @@
             <x-input-wrapper id="location" label="Location" required>
                 <x-input-field wire:model="location" placeholder="e.g. London, GB" id="location" required />
             </x-input-wrapper>
-            <x-button type="submit">Get Weather</x-button>
+            <x-button type="submit" wire:loading.attr="disabled">Get Weather</x-button>
         </div>
         @error('location')
             <x-error-message>{{ $message }}</x-error-message>
